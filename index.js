@@ -60,6 +60,8 @@ function shortBreakModeElHandler() {
 }
 
 function pomodoroStartButtonHandler() {
+  shortBreakResetButtonHandler();
+
   hide(pomodoroStartButton);
   show(pomodoroStopButton);
   pomodoroStopButton.focus();
@@ -107,6 +109,8 @@ function pomodoroResetButtonHandler() {
 }
 
 function shortBreakStartButtonHandler() {
+  pomodoroResetButtonHandler();
+
   hide(shortBreakStartButton);
   show(shortBreakStopButton);
   shortBreakStopButton.focus();
