@@ -79,6 +79,7 @@ function longBreakModeElHandler() {
 
 function pomodoroStartButtonHandler() {
   shortBreakResetButtonHandler();
+  longBreakResetButtonHandler();
 
   hide(pomodoroStartButton);
   show(pomodoroStopButton);
@@ -128,6 +129,7 @@ function pomodoroResetButtonHandler() {
 
 function shortBreakStartButtonHandler() {
   pomodoroResetButtonHandler();
+  longBreakResetButtonHandler();
 
   hide(shortBreakStartButton);
   show(shortBreakStopButton);
