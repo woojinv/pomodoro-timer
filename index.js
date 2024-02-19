@@ -39,6 +39,7 @@ pomodoroResetButton.addEventListener('click', pomodoroResetButtonHandler);
 
 shortBreakStartButton.addEventListener('click', shortBreakStartButtonHandler);
 shortBreakStopButton.addEventListener('click', shortBreakStopButtonHandler);
+shortBreakResetButton.addEventListener('click', shortBreakResetButtonHandler);
 
 /*
  * Handler functions
@@ -128,6 +129,15 @@ function shortBreakStopButtonHandler() {
   hide(shortBreakStopButton);
   show(shortBreakStartButton);
   shortBreakStartButton.focus();
+}
+
+function shortBreakResetButtonHandler() {
+  stopTimer(shortBreakTimer);
+  setTimerEl(shortBreakTimerEl, shortBreakSeconds);
+  hide(shortBreakResetButton);
+  show(shortBreakStartButton);
+  shortBreakStartButton.focus();
+  hide(shortBreakStopButton);
 }
 
 /*
