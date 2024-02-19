@@ -25,6 +25,9 @@ const shortBreakResetButton = document.getElementById('shortBreakResetButton');
 let pomodoroTimer;
 let shortBreakTimer;
 
+let pomodoroActive = false;
+let shortBreakActive = false;
+
 pomodoroStartButton.focus();
 
 /*
@@ -47,11 +50,13 @@ shortBreakResetButton.addEventListener('click', shortBreakResetButtonHandler);
 function pomodoroModeElHandler() {
   hide(shortBreakContainer);
   show(pomodoroContainer);
+  pomodoroActive ? pomodoroStopButton.focus() : pomodoroStartButton.focus();
 }
 
 function shortBreakModeElHandler() {
   hide(pomodoroContainer);
   show(shortBreakContainer);
+  shortBreakActive ? shortBreakStopButton.focus() : shortBreakStartButton.focus();
 }
 
 function pomodoroStartButtonHandler() {
@@ -63,11 +68,13 @@ function pomodoroStartButtonHandler() {
   let totalSeconds = getTotalSeconds(pomodoroTimerEl);
 
   pomodoroTimer = setInterval(function () {
+    pomodoroActive = true;
     totalSeconds -= 1;
     setTimerEl(pomodoroTimerEl, totalSeconds);
 
     if (totalSeconds === 0) {
       stopTimer(pomodoroTimer);
+      pomodoroActive = false;
       setTimerEl(pomodoroTimerEl, pomodoroSeconds);
 
       hide(pomodoroContainer);
@@ -83,6 +90,7 @@ function pomodoroStartButtonHandler() {
 
 function pomodoroStopButtonHandler() {
   stopTimer(pomodoroTimer);
+  pomodoroActive = false;
   hide(pomodoroStopButton);
   show(pomodoroStartButton);
   pomodoroStartButton.focus();
@@ -90,6 +98,7 @@ function pomodoroStopButtonHandler() {
 
 function pomodoroResetButtonHandler() {
   stopTimer(pomodoroTimer);
+  pomodoroActive = false;
   setTimerEl(pomodoroTimerEl, pomodoroSeconds);
   hide(pomodoroResetButton);
   show(pomodoroStartButton);
@@ -106,11 +115,13 @@ function shortBreakStartButtonHandler() {
   let totalSeconds = getTotalSeconds(shortBreakTimerEl);
 
   shortBreakTimer = setInterval(function () {
+    shortBreakActive = true;
     totalSeconds -= 1;
     setTimerEl(shortBreakTimerEl, totalSeconds);
 
     if (totalSeconds === 0) {
       stopTimer(shortBreakTimer);
+      shortBreakActive = false;
       setTimerEl(shortBreakTimerEl, shortBreakSeconds);
 
       hide(shortBreakContainer);
@@ -126,6 +137,7 @@ function shortBreakStartButtonHandler() {
 
 function shortBreakStopButtonHandler() {
   stopTimer(shortBreakTimer);
+  shortBreakActive = false;
   hide(shortBreakStopButton);
   show(shortBreakStartButton);
   shortBreakStartButton.focus();
@@ -133,6 +145,7 @@ function shortBreakStopButtonHandler() {
 
 function shortBreakResetButtonHandler() {
   stopTimer(shortBreakTimer);
+  shortBreakActive = false;
   setTimerEl(shortBreakTimerEl, shortBreakSeconds);
   hide(shortBreakResetButton);
   show(shortBreakStartButton);
