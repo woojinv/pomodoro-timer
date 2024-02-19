@@ -9,15 +9,18 @@ const longBreakModeEl = document.getElementById('longBreakMode');
 
 const pomodoroContainer = document.getElementById('pomodoroContainer');
 const shortBreakContainer = document.getElementById('shortBreakContainer');
+const longBreakContainer = document.getElementById('longBreakContainer');
 
 const pomodoroTimerEl = document.getElementById('pomodoroTimer');
 const shortBreakTimerEl = document.getElementById('shortBreakTimer');
 
 const pomodoroStartButton = document.getElementById('pomodoroStartButton');
 const shortBreakStartButton = document.getElementById('shortBreakStartButton');
+const longBreakStartButton = document.getElementById('longBreakStartButton');
 
 const pomodoroStopButton = document.getElementById('pomodoroStopButton');
 const shortBreakStopButton = document.getElementById('shortBreakStopButton');
+const longBreakStopButton = document.getElementById('longBreakStopButton');
 
 const pomodoroResetButton = document.getElementById('pomodoroResetButton');
 const shortBreakResetButton = document.getElementById('shortBreakResetButton');
@@ -27,6 +30,7 @@ let shortBreakTimer;
 
 let pomodoroActive = false;
 let shortBreakActive = false;
+let longBreakActive = false;
 
 pomodoroStartButton.focus();
 
@@ -35,6 +39,7 @@ pomodoroStartButton.focus();
  */
 pomodoroModeEl.addEventListener('click', pomodoroModeElHandler);
 shortBreakModeEl.addEventListener('click', shortBreakModeElHandler);
+longBreakModeEl.addEventListener('click', longBreakModeElHandler);
 
 pomodoroStartButton.addEventListener('click', pomodoroStartButtonHandler);
 pomodoroStopButton.addEventListener('click', pomodoroStopButtonHandler);
@@ -49,14 +54,23 @@ shortBreakResetButton.addEventListener('click', shortBreakResetButtonHandler);
  */
 function pomodoroModeElHandler() {
   hide(shortBreakContainer);
+  hide(longBreakContainer);
   show(pomodoroContainer);
   pomodoroActive ? pomodoroStopButton.focus() : pomodoroStartButton.focus();
 }
 
 function shortBreakModeElHandler() {
   hide(pomodoroContainer);
+  hide(longBreakContainer);
   show(shortBreakContainer);
   shortBreakActive ? shortBreakStopButton.focus() : shortBreakStartButton.focus();
+}
+
+function longBreakModeElHandler() {
+  hide(pomodoroContainer);
+  hide(shortBreakContainer);
+  show(longBreakContainer);
+  longBreakActive ? longBreakStopButton.focus() : longBreakStartButton.focus();
 }
 
 function pomodoroStartButtonHandler() {

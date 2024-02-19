@@ -82,6 +82,38 @@
           display: inline-block;
         }
       }
+
+      .long-break-container {
+        display: none;
+      }
+
+      .long-break-container.visible {
+        display: block;
+
+        .long-break-start-buttion {
+          display: none;
+        }
+
+        .long-break-start-button.visible {
+          display: inline-block;
+        }
+
+        .long-break-stop-button {
+          display: none;
+        }
+
+        .long-break-stop-button.visible {
+          display: inline-block;
+        }
+
+        .long-break-reset-button {
+          display: none;
+        }
+
+        .long-break-reset-button.visible {
+          display: inline-block;
+        }
+      }
     }
   }
 }
