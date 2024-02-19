@@ -13,24 +13,43 @@ const shortBreakContainer = document.getElementById('shortBreakContainer');
 const pomodoroTimerEl = document.getElementById('pomodoroTimer');
 
 const pomodoroStartButton = document.getElementById('pomodoroStartButton');
+const shortBreakStartButton = document.getElementById('shortBreakStartButton');
 
 const pomodoroStopButton = document.getElementById('pomodoroStopButton');
+const shortBreakStopButton = document.getElementById('shortBreakStopButton');
 
 const pomodoroResetButton = document.getElementById('pomodoroResetButton');
+const shortBreakResetButton = document.getElementById('shortBreakResetButton');
 
 let pomodoroTimer;
+
+pomodoroStartButton.focus();
 
 /*
  * Register event listeners
  */
+pomodoroModeEl.addEventListener('click', pomodoroModeElHandler);
+shortBreakModeEl.addEventListener('click', shortBreakModeElHandler);
 
 pomodoroStartButton.addEventListener('click', pomodoroStartButtonHandler);
 pomodoroStopButton.addEventListener('click', pomodoroStopButtonHandler);
 pomodoroResetButton.addEventListener('click', pomodoroResetButtonHandler);
 
+shortBreakStartButton.addEventListener('click', shortBreakStartButtonHandler);
+
 /*
  * Handler functions
  */
+function pomodoroModeElHandler() {
+  hide(shortBreakContainer);
+  show(pomodoroContainer);
+}
+
+function shortBreakModeElHandler() {
+  hide(pomodoroContainer);
+  show(shortBreakContainer);
+}
+
 function pomodoroStartButtonHandler() {
   hide(pomodoroStartButton);
   show(pomodoroStopButton);
@@ -45,16 +64,15 @@ function pomodoroStartButtonHandler() {
 
     if (totalSeconds === 0) {
       stopTimer(pomodoroTimer);
+      setTimerEl(pomodoroTimerEl, pomodoroSeconds);
 
       hide(pomodoroContainer);
       hide(pomodoroStopButton);
       hide(pomodoroResetButton);
-
-      setTimerEl(pomodoroTimerEl, pomodoroSeconds);
-
       show(pomodoroStartButton);
-
       show(shortBreakContainer);
+      displayCurrentMode(shortBreakModeEl);
+      shortBreakStartButton.focus();
     }
   }, 1000);
 }
@@ -75,6 +93,13 @@ function pomodoroResetButtonHandler() {
   hide(pomodoroStopButton);
 }
 
+function shortBreakStartButtonHandler() {
+  hide(shortBreakStartButton);
+  show(shortBreakStopButton);
+  shortBreakStopButton.focus();
+  show(shortBreakResetButton);
+}
+
 /*
  * DOM manipulation functions
  */
@@ -85,6 +110,10 @@ function hide(domEl) {
 
 function show(domEl) {
   domEl.classList.add('visible');
+}
+
+function displayCurrentMode(modeEl) {
+  modeEl.checked = true;
 }
 
 function setTimerEl(timerEl, seconds) {
