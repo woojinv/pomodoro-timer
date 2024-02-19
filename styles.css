@@ -10,36 +10,86 @@
       margin: auto;
       text-align: center;
 
-      .pomodoro-start-button {
+      .pomodoro-container {
         display: none;
       }
 
-      .pomodoro-start-button.visible {
-        display: inline-block;
-        font-size: 22px;
-        background-color: buttonface;
-        border-radius: 4px;
-        border: none;
-        height: 50px;
-        width: 150px;
+      .pomodoro-container.visible {
+        display: block;
+
+        .pomodoro-start-button {
+          display: none;
+        }
+
+        .pomodoro-start-button.visible {
+          display: inline-block;
+          font-size: 22px;
+          background-color: buttonface;
+          border-radius: 4px;
+          border: none;
+          height: 50px;
+          width: 150px;
+        }
+
+        .pomodoro-stop-button {
+          display: none;
+        }
+
+        .pomodoro-stop-button.visible {
+          display: inline-block;
+          font-size: 22px;
+          background-color: buttonface;
+          border-radius: 4px;
+          border: none;
+          height: 50px;
+          width: 150px;
+        }
+
+        .pomodoro-reset-button {
+          display: none;
+        }
+
+        .pomodoro-reset-button.visible {
+          display: inline-block;
+          font-size: 22px;
+          background-color: buttonface;
+          border-radius: 4px;
+          border: none;
+          height: 50px;
+          width: 150px;
+        }
       }
 
-      .pomodoro-stop-button {
+      .short-break-container {
         display: none;
       }
 
-      .pomodoro-stop-button.visible {
-        display: inline-block;
-        font-size: 22px;
-        background-color: buttonface;
-        border-radius: 4px;
-        border: none;
-        height: 50px;
-        width: 150px;
-      }
+      .short-break-container.visible {
+        display: block;
 
-      .pomodoro-reset-button {
-        display: none;
+        .short-break-start-button {
+          display: none;
+        }
+
+        .short-break-start-button.visible {
+          display: inline-block;
+        }
+
+        .short-break-stop-button {
+          display: none;
+        }
+
+        .short-break-stop-button.visible {
+          display: inline-block;
+        }
+
+        .short-break-reset-button {
+          display: none;
+        }
+
+        .short-break-reset-button.visible {
+          display: inline-block;
+        }
       }
     }
   }
