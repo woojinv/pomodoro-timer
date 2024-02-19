@@ -53,6 +53,7 @@ shortBreakStopButton.addEventListener('click', shortBreakStopButtonHandler);
 shortBreakResetButton.addEventListener('click', shortBreakResetButtonHandler);
 
 longBreakStartButton.addEventListener('click', longBreakStartButtonHandler);
+longBreakStopButton.addEventListener('click', longBreakStopButtonHandler);
 
 /*
  * Handler functions
@@ -61,21 +62,18 @@ function pomodoroModeElHandler() {
   hide(shortBreakContainer);
   hide(longBreakContainer);
   show(pomodoroContainer);
-  pomodoroActive ? pomodoroStopButton.focus() : pomodoroStartButton.focus();
 }
 
 function shortBreakModeElHandler() {
   hide(pomodoroContainer);
   hide(longBreakContainer);
   show(shortBreakContainer);
-  shortBreakActive ? shortBreakStopButton.focus() : shortBreakStartButton.focus();
 }
 
 function longBreakModeElHandler() {
   hide(pomodoroContainer);
   hide(shortBreakContainer);
   show(longBreakContainer);
-  longBreakActive ? longBreakStopButton.focus() : longBreakStartButton.focus();
 }
 
 function pomodoroStartButtonHandler() {
@@ -206,6 +204,14 @@ function longBreakStartButtonHandler() {
       pomodoroStartButton.focus();
     }
   }, 1000);
+}
+
+function longBreakStopButtonHandler() {
+  stopTimer(longBreakTimer);
+  longBreakActive = false;
+  hide(longBreakStopButton);
+  show(longBreakStartButton);
+  longBreakStartButton.focus();
 }
 
 /*
