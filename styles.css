@@ -9,6 +9,38 @@
       width: 400px;
       margin: auto;
       text-align: center;
+
+      .pomodoro-start-button {
+        display: none;
+      }
+
+      .pomodoro-start-button.visible {
+        display: inline-block;
+        font-size: 22px;
+        background-color: buttonface;
+        border-radius: 4px;
+        border: none;
+        height: 50px;
+        width: 150px;
+      }
+
+      .pomodoro-stop-button {
+        display: none;
+      }
+
+      .pomodoro-stop-button.visible {
+        display: inline-block;
+        font-size: 22px;
+        background-color: buttonface;
+        border-radius: 4px;
+        border: none;
+        height: 50px;
+        width: 150px;
+      }
+
+      .pomodoro-reset-button {
+        display: none;
+      }
     }
   }
 }

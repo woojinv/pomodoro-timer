@@ -12,6 +12,7 @@
 <body>
   <main>
     <h1>Pomdoro Timer</h1>
+
     <nav>
       <input type="radio" id="pomodoroMode" name="mode" value="pomodoro" checked />
       <label for="pomodoroMode">Pomodoro</label>
@@ -20,9 +21,14 @@
       <input type="radio" id="longBreakMode" name="mode" value="longBreak" />
       <label for="longBreakMode">Long Break</label>
     </nav>
-    <div id="timer">00:06</div>
-    <button id="startButton">Start</button>
-    <button>Stop</button>
+
+    <div id="pomodoroContainer">
+      <div id="pomodoroTimer">00:06</div>
+      <button id="pomodoroStartButton" class="pomodoro-start-button visible">Start</button>
+      <button id="pomodoroStopButton" class="pomodoro-stop-button">Stop</button>
+      <button id="pomodoroResetButton" class="pomodoro-reset-button">Reset</button>
+    </div>
+
   </main>
 
 
