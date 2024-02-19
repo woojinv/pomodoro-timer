@@ -10,6 +10,10 @@
       margin: auto;
       text-align: center;
 
+      .radio-button {
+        display: none;
+      }
+
       button {
         font-size: 22px;
         background-color: buttonface;
