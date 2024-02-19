@@ -13,6 +13,7 @@ const longBreakContainer = document.getElementById('longBreakContainer');
 
 const pomodoroTimerEl = document.getElementById('pomodoroTimer');
 const shortBreakTimerEl = document.getElementById('shortBreakTimer');
+const longBreakTimerEl = document.getElementById('longBreakTimer');
 
 const pomodoroStartButton = document.getElementById('pomodoroStartButton');
 const shortBreakStartButton = document.getElementById('shortBreakStartButton');
@@ -24,9 +25,11 @@ const longBreakStopButton = document.getElementById('longBreakStopButton');
 
 const pomodoroResetButton = document.getElementById('pomodoroResetButton');
 const shortBreakResetButton = document.getElementById('shortBreakResetButton');
+const longBreakResetButton = document.getElementById('longBreakResetButton');
 
 let pomodoroTimer;
 let shortBreakTimer;
+let longBreakTimer;
 
 let pomodoroActive = false;
 let shortBreakActive = false;
@@ -48,6 +51,8 @@ pomodoroResetButton.addEventListener('click', pomodoroResetButtonHandler);
 shortBreakStartButton.addEventListener('click', shortBreakStartButtonHandler);
 shortBreakStopButton.addEventListener('click', shortBreakStopButtonHandler);
 shortBreakResetButton.addEventListener('click', shortBreakResetButtonHandler);
+
+longBreakStartButton.addEventListener('click', longBreakStartButtonHandler);
 
 /*
  * Handler functions
@@ -169,6 +174,38 @@ function shortBreakResetButtonHandler() {
   show(shortBreakStartButton);
   shortBreakStartButton.focus();
   hide(shortBreakStopButton);
+}
+
+function longBreakStartButtonHandler() {
+  pomodoroResetButtonHandler();
+  shortBreakResetButtonHandler();
+
+  hide(longBreakStartButton);
+  show(longBreakStopButton);
+  longBreakStopButton.focus();
+  show(longBreakResetButton);
+
+  let totalSeconds = getTotalSeconds(longBreakTimerEl);
+
+  longBreakTimer = setInterval(function () {
+    longBreakActive = true;
+    totalSeconds -= 1;
+    setTimerEl(longBreakTimerEl, totalSeconds);
+
+    if (totalSeconds === 0) {
+      stopTimer(longBreakTimer);
+      longBreakActive = false;
+      setTimerEl(longBreakTimerEl, longBreakSeconds);
+
+      hide(longBreakContainer);
+      hide(longBreakStopButton);
+      hide(longBreakResetButton);
+      show(longBreakStartButton);
+      show(pomodoroContainer);
+      displayCurrentMode(pomodoroModeEl);
+      pomodoroStartButton.focus();
+    }
+  }, 1000);
 }
 
 /*
