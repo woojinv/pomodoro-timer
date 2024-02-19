@@ -11,6 +11,7 @@ const pomodoroContainer = document.getElementById('pomodoroContainer');
 const shortBreakContainer = document.getElementById('shortBreakContainer');
 
 const pomodoroTimerEl = document.getElementById('pomodoroTimer');
+const shortBreakTimerEl = document.getElementById('shortBreakTimer');
 
 const pomodoroStartButton = document.getElementById('pomodoroStartButton');
 const shortBreakStartButton = document.getElementById('shortBreakStartButton');
@@ -22,6 +23,7 @@ const pomodoroResetButton = document.getElementById('pomodoroResetButton');
 const shortBreakResetButton = document.getElementById('shortBreakResetButton');
 
 let pomodoroTimer;
+let shortBreakTimer;
 
 pomodoroStartButton.focus();
 
@@ -98,6 +100,26 @@ function shortBreakStartButtonHandler() {
   show(shortBreakStopButton);
   shortBreakStopButton.focus();
   show(shortBreakResetButton);
+
+  let totalSeconds = getTotalSeconds(shortBreakTimerEl);
+
+  shortBreakTimer = setInterval(function () {
+    totalSeconds -= 1;
+    setTimerEl(shortBreakTimerEl, totalSeconds);
+
+    if (totalSeconds === 0) {
+      stopTimer(shortBreakTimer);
+      setTimerEl(shortBreakTimerEl, shortBreakSeconds);
+
+      hide(shortBreakContainer);
+      hide(shortBreakStopButton);
+      hide(shortBreakResetButton);
+      show(shortBreakStartButton);
+      show(pomodoroContainer);
+      displayCurrentMode(pomodoroModeEl);
+      pomodoroStartButton.focus();
+    }
+  }, 1000);
 }
 
 /*
