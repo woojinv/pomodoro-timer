@@ -54,6 +54,7 @@ shortBreakResetButton.addEventListener('click', shortBreakResetButtonHandler);
 
 longBreakStartButton.addEventListener('click', longBreakStartButtonHandler);
 longBreakStopButton.addEventListener('click', longBreakStopButtonHandler);
+longBreakResetButton.addEventListener('click', longBreakResetButtonHandler);
 
 /*
  * Handler functions
@@ -212,6 +213,16 @@ function longBreakStopButtonHandler() {
   hide(longBreakStopButton);
   show(longBreakStartButton);
   longBreakStartButton.focus();
+}
+
+function longBreakResetButtonHandler() {
+  stopTimer(longBreakTimer);
+  longBreakActive = false;
+  setTimerEl(longBreakTimerEl, longBreakSeconds);
+  hide(longBreakResetButton);
+  show(longBreakStartButton);
+  longBreakStartButton.focus();
+  hide(longBreakStopButton);
 }
 
 /*
