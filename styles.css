@@ -25,7 +25,6 @@
           background-color: buttonface;
           padding: 8px 13px;
           border-radius: 4px;
-          transition-duration: 0.4s;
         }
 
         label:hover {
@@ -38,6 +37,10 @@
 
         .radio-button:focus + label {
           outline: -webkit-focus-ring-color auto 1px;
+        }
+
+        .radio-button:active + label {
+          transform: scale(0.975);
         }
       }
 
@@ -53,11 +56,14 @@
         border: none;
         height: 50px;
         width: 150px;
-        transition-duration: 0.4s;
       }
 
       button:hover {
         background-color: lightgray;
+      }
+
+      button:active {
+        transform: scale(0.975);
       }
 
       .pomodoro-container {
