@@ -39,6 +39,21 @@ let numPomodoros = 0;
 
 pomodoroStartButton.focus();
 
+// Get permission to send notifications.
+document.addEventListener('DOMContentLoaded', function () {
+  if ('Notification' in window) {
+    Notification.requestPermission().then((permission) => {
+      if (permission === 'granted') {
+        new Notification('Notifications enabled');
+      } else {
+        console.log('Notification permission denied');
+      }
+    });
+  } else {
+    console.log('Notifications not available in this browser.');
+  }
+});
+
 /*
  * Register event listeners
  */
