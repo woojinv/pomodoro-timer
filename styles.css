@@ -25,6 +25,7 @@
           background-color: buttonface;
           padding: 8px 13px;
           border-radius: 4px;
+          transition-duration: 0.4s;
         }
 
         label:hover {
@@ -52,6 +53,7 @@
         border: none;
         height: 50px;
         width: 150px;
+        transition-duration: 0.4s;
       }
 
       button:hover {
