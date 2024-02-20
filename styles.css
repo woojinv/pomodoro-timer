@@ -10,6 +10,11 @@
       margin: auto;
       text-align: center;
 
+      h1 {
+        font-size: 42px;
+        margin-top: 3rem;
+      }
+
       nav {
         display: flex;
         justify-content: center;
