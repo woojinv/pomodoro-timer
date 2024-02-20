@@ -71,98 +71,18 @@
         transform: scale(0.975);
       }
 
-      .pomodoro-container {
+      .timer-container {
         display: none;
       }
 
-      .pomodoro-container.visible {
+      .timer-container.visible {
         display: block;
 
-        .pomodoro-start-button {
+        .timer-button {
           display: none;
         }
 
-        .pomodoro-start-button.visible {
-          display: inline-block;
-        }
-
-        .pomodoro-stop-button {
-          display: none;
-        }
-
-        .pomodoro-stop-button.visible {
-          display: inline-block;
-        }
-
-        .pomodoro-reset-button {
-          display: none;
-        }
-
-        .pomodoro-reset-button.visible {
-          display: inline-block;
-        }
-      }
-
-      .short-break-container {
-        display: none;
-      }
-
-      .short-break-container.visible {
-        display: block;
-
-        .short-break-start-button {
-          display: none;
-        }
-
-        .short-break-start-button.visible {
-          display: inline-block;
-        }
-
-        .short-break-stop-button {
-          display: none;
-        }
-
-        .short-break-stop-button.visible {
-          display: inline-block;
-        }
-
-        .short-break-reset-button {
-          display: none;
-        }
-
-        .short-break-reset-button.visible {
-          display: inline-block;
-        }
-      }
-
-      .long-break-container {
-        display: none;
-      }
-
-      .long-break-container.visible {
-        display: block;
-
-        .long-break-start-button {
-          display: none;
-        }
-
-        .long-break-start-button.visible {
-          display: inline-block;
-        }
-
-        .long-break-stop-button {
-          display: none;
-        }
-
-        .long-break-stop-button.visible {
-          display: inline-block;
-        }
-
-        .long-break-reset-button {
-          display: none;
-        }
-
-        .long-break-reset-button.visible {
+        .timer-button.visible {
           display: inline-block;
         }
       }
