@@ -35,6 +35,8 @@ let pomodoroActive = false;
 let shortBreakActive = false;
 let longBreakActive = false;
 
+let numPomodoros = 0;
+
 pomodoroStartButton.focus();
 
 /*
@@ -102,9 +104,19 @@ function pomodoroStartButtonHandler() {
       hide(pomodoroStopButton);
       hide(pomodoroResetButton);
       show(pomodoroStartButton);
-      show(shortBreakContainer);
-      displayCurrentMode(shortBreakModeEl);
-      shortBreakStartButton.focus();
+
+      numPomodoros += 1;
+
+      if (numPomodoros !== 4) {
+        show(shortBreakContainer);
+        displayCurrentMode(shortBreakModeEl);
+        shortBreakStartButton.focus();
+      } else {
+        numPomodoros = 0;
+        show(longBreakContainer);
+        displayCurrentMode(longBreakModeEl);
+        longBreakStartButton.focus();
+      }
     }
   }, 1000);
 }
