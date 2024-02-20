@@ -37,6 +37,8 @@ let longBreakActive = false;
 
 let numPomodoros = 0;
 
+const clickAudio = new Audio('./sounds/click.mp3');
+
 pomodoroStartButton.focus();
 
 // Get permission to send notifications.
@@ -136,6 +138,7 @@ function pomodoroStartButtonHandler() {
       notify();
     }
   }, 1000);
+  playClickSound();
 }
 
 function pomodoroStopButtonHandler() {
@@ -188,6 +191,7 @@ function shortBreakStartButtonHandler() {
       notify();
     }
   }, 1000);
+  playClickSound();
 }
 
 function shortBreakStopButtonHandler() {
@@ -240,6 +244,7 @@ function longBreakStartButtonHandler() {
       notify();
     }
   }, 1000);
+  playClickSound();
 }
 
 function longBreakStopButtonHandler() {
@@ -307,4 +312,8 @@ function notify() {
   }
 
   new Audio('./sounds/short-break-end.mp3').play();
+}
+
+function playClickSound() {
+  clickAudio.play();
 }
