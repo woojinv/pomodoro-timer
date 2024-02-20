@@ -117,6 +117,8 @@ function pomodoroStartButtonHandler() {
         displayCurrentMode(longBreakModeEl);
         longBreakStartButton.focus();
       }
+
+      notify();
     }
   }, 1000);
 }
@@ -167,6 +169,8 @@ function shortBreakStartButtonHandler() {
       show(pomodoroContainer);
       displayCurrentMode(pomodoroModeEl);
       pomodoroStartButton.focus();
+
+      notify();
     }
   }, 1000);
 }
@@ -217,6 +221,8 @@ function longBreakStartButtonHandler() {
       show(pomodoroContainer);
       displayCurrentMode(pomodoroModeEl);
       pomodoroStartButton.focus();
+
+      notify();
     }
   }, 1000);
 }
@@ -275,4 +281,15 @@ function getTotalSeconds(timerEl) {
 
 function stopTimer(timer) {
   clearInterval(timer);
+}
+
+function notify() {
+  if (Notification.permission === 'granted') {
+    new Notification("Time's up!").addEventListener('click', function () {
+      window.focus();
+      this.close();
+    });
+  }
+
+  new Audio('./sounds/short-break-end.mp3').play();
 }
