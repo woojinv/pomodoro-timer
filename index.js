@@ -3,9 +3,9 @@ const clickAudio = new Audio('./sounds/click.mp3');
 const notificationAudio = new Audio('./sounds/short-break-end.mp3');
 
 // Constants
-const POMODORO_SECONDS = 5;
-const SHORT_BREAK_SECONDS = 6;
-const LONG_BREAK_SECONDS = 7;
+const POMODORO_SECONDS = 25 * 60;
+const SHORT_BREAK_SECONDS = 5 * 60;
+const LONG_BREAK_SECONDS = 15 * 60;
 
 // DOM elements
 const pomodoroModeEl = document.getElementById('pomodoroMode');
