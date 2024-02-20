@@ -1,8 +1,13 @@
-// Constants
-const pomodoroSeconds = 5;
-const shortBreakSeconds = 6;
-const longBreakSeconds = 7;
+// Imports
+const clickAudio = new Audio('./sounds/click.mp3');
+const notificationAudio = new Audio('./sounds/short-break-end.mp3');
 
+// Constants
+const POMODORO_SECONDS = 5;
+const SHORT_BREAK_SECONDS = 6;
+const LONG_BREAK_SECONDS = 7;
+
+// DOM elements
 const pomodoroModeEl = document.getElementById('pomodoroMode');
 const shortBreakModeEl = document.getElementById('shortBreakMode');
 const longBreakModeEl = document.getElementById('longBreakMode');
@@ -27,38 +32,9 @@ const pomodoroResetButton = document.getElementById('pomodoroResetButton');
 const shortBreakResetButton = document.getElementById('shortBreakResetButton');
 const longBreakResetButton = document.getElementById('longBreakResetButton');
 
-let pomodoroTimer;
-let shortBreakTimer;
-let longBreakTimer;
+// Register event listeners
+document.addEventListener('DOMContentLoaded', domContentLoadedHandler);
 
-let pomodoroActive = false;
-let shortBreakActive = false;
-let longBreakActive = false;
-
-let numPomodoros = 0;
-
-const clickAudio = new Audio('./sounds/click.mp3');
-
-pomodoroStartButton.focus();
-
-// Get permission to send notifications.
-document.addEventListener('DOMContentLoaded', function () {
-  if ('Notification' in window) {
-    Notification.requestPermission().then((permission) => {
-      if (permission === 'granted') {
-        new Notification('Notifications enabled');
-      } else {
-        console.log('Notification permission denied');
-      }
-    });
-  } else {
-    console.log('Notifications not available in this browser.');
-  }
-});
-
-/*
- * Register event listeners
- */
 pomodoroModeEl.addEventListener('click', pomodoroModeElHandler);
 shortBreakModeEl.addEventListener('click', shortBreakModeElHandler);
 longBreakModeEl.addEventListener('click', longBreakModeElHandler);
@@ -75,9 +51,35 @@ longBreakStartButton.addEventListener('click', longBreakStartButtonHandler);
 longBreakStopButton.addEventListener('click', longBreakStopButtonHandler);
 longBreakResetButton.addEventListener('click', longBreakResetButtonHandler);
 
-/*
- * Handler functions
- */
+// Global variables
+let pomodoroTimer;
+let shortBreakTimer;
+let longBreakTimer;
+
+let numPomodoros = 0;
+
+let pomodoroActive = false;
+let shortBreakActive = false;
+let longBreakActive = false;
+
+pomodoroStartButton.focus();
+
+// Handler functions
+// Get permission to send notifications.
+function domContentLoadedHandler() {
+  if ('Notification' in window) {
+    Notification.requestPermission().then((permission) => {
+      if (permission === 'granted') {
+        new Notification('Notifications enabled');
+      } else {
+        console.log('Notification permission denied');
+      }
+    });
+  } else {
+    console.log('Notifications not available in this browser.');
+  }
+}
+
 function pomodoroModeElHandler() {
   hide(shortBreakContainer);
   hide(longBreakContainer);
@@ -115,7 +117,7 @@ function pomodoroStartButtonHandler() {
     if (totalSeconds === 0) {
       stopTimer(pomodoroTimer);
       pomodoroActive = false;
-      setTimerEl(pomodoroTimerEl, pomodoroSeconds);
+      setTimerEl(pomodoroTimerEl, POMODORO_SECONDS);
 
       hide(pomodoroContainer);
       hide(pomodoroStopButton);
@@ -152,7 +154,7 @@ function pomodoroStopButtonHandler() {
 function pomodoroResetButtonHandler() {
   stopTimer(pomodoroTimer);
   pomodoroActive = false;
-  setTimerEl(pomodoroTimerEl, pomodoroSeconds);
+  setTimerEl(pomodoroTimerEl, POMODORO_SECONDS);
   hide(pomodoroResetButton);
   show(pomodoroStartButton);
   pomodoroStartButton.focus();
@@ -178,7 +180,7 @@ function shortBreakStartButtonHandler() {
     if (totalSeconds === 0) {
       stopTimer(shortBreakTimer);
       shortBreakActive = false;
-      setTimerEl(shortBreakTimerEl, shortBreakSeconds);
+      setTimerEl(shortBreakTimerEl, SHORT_BREAK_SECONDS);
 
       hide(shortBreakContainer);
       hide(shortBreakStopButton);
@@ -205,7 +207,7 @@ function shortBreakStopButtonHandler() {
 function shortBreakResetButtonHandler() {
   stopTimer(shortBreakTimer);
   shortBreakActive = false;
-  setTimerEl(shortBreakTimerEl, shortBreakSeconds);
+  setTimerEl(shortBreakTimerEl, SHORT_BREAK_SECONDS);
   hide(shortBreakResetButton);
   show(shortBreakStartButton);
   shortBreakStartButton.focus();
@@ -231,7 +233,7 @@ function longBreakStartButtonHandler() {
     if (totalSeconds === 0) {
       stopTimer(longBreakTimer);
       longBreakActive = false;
-      setTimerEl(longBreakTimerEl, longBreakSeconds);
+      setTimerEl(longBreakTimerEl, LONG_BREAK_SECONDS);
 
       hide(longBreakContainer);
       hide(longBreakStopButton);
@@ -258,17 +260,14 @@ function longBreakStopButtonHandler() {
 function longBreakResetButtonHandler() {
   stopTimer(longBreakTimer);
   longBreakActive = false;
-  setTimerEl(longBreakTimerEl, longBreakSeconds);
+  setTimerEl(longBreakTimerEl, LONG_BREAK_SECONDS);
   hide(longBreakResetButton);
   show(longBreakStartButton);
   longBreakStartButton.focus();
   hide(longBreakStopButton);
 }
 
-/*
- * DOM manipulation functions
- */
-
+// Helper functions
 function hide(domEl) {
   domEl.classList.remove('visible');
 }
@@ -289,9 +288,6 @@ function setTimerEl(timerEl, seconds) {
   timerEl.innerHTML = `${formattedMinutes}:${formattedSeconds}`;
 }
 
-/*
- * Helper functions
- */
 function getTotalSeconds(timerEl) {
   const timeValues = timerEl.innerHTML.split(':');
   const minutes = Number(timeValues[0]);
@@ -311,7 +307,7 @@ function notify() {
     });
   }
 
-  new Audio('./sounds/short-break-end.mp3').play();
+  notificationAudio.play();
 }
 
 function playClickSound() {
