@@ -5,9 +5,10 @@
 ## Done
 
 - style radio buttons to look like buttons
-
-## TODO
-
 - use css variables for colors.
 - change background color
 - change font color
+
+## TODO
+
+- fix radio button inputs
