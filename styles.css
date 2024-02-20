@@ -27,9 +27,22 @@
           border-radius: 4px;
         }
 
+        label:hover {
+          background-color: lightgray;
+        }
+
         .radio-button:checked + label {
           background-color: lightgray;
         }
+
+        .radio-button:focus + label {
+          outline: -webkit-focus-ring-color auto 1px;
+        }
+      }
+
+      .timer {
+        font-size: 72px;
+        margin: 2rem 0;
       }
 
       button {
@@ -39,6 +52,10 @@
         border: none;
         height: 50px;
         width: 150px;
+      }
+
+      button:hover {
+        background-color: lightgray;
       }
 
       .pomodoro-container {
