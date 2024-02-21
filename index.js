@@ -1,7 +1,8 @@
 // Imports
 const clickAudio = new Audio('./sounds/click.mp3');
 const notificationAudio = new Audio('./sounds/short-break-end.mp3');
-const timerWorker = new Worker('timerWorker.js');
+const pomodoroWorker = new Worker('pomodoroWorker.js');
+const shortBreakWorker = new Worker('pomodoroWorker.js');
 
 // Constants
 const POMODORO_SECONDS = 5;
@@ -100,7 +101,7 @@ function longBreakModeElHandler() {
 
 function pomodoroStartButtonHandler() {
   shortBreakResetButtonHandler();
-  longBreakResetButtonHandler();
+  // longBreakResetButtonHandler();
 
   hide(pomodoroStartButton);
   show(pomodoroStopButton);
@@ -108,12 +109,11 @@ function pomodoroStartButtonHandler() {
   show(pomodoroResetButton);
 
   let totalSeconds = getTotalSeconds(pomodoroTimerEl);
-
-  timerWorker.postMessage({ command: 'startTimer', totalSeconds });
+  startTimer(pomodoroWorker, totalSeconds);
 
   pomodoroActive = true;
 
-  timerWorker.onmessage = function (e) {
+  pomodoroWorker.onmessage = function (e) {
     if (e.data === 'countDownComplete') {
       pomodoroActive = false;
       setTimerEl(pomodoroTimerEl, POMODORO_SECONDS);
@@ -146,7 +146,7 @@ function pomodoroStartButtonHandler() {
 }
 
 function pomodoroStopButtonHandler() {
-  stopTimer();
+  stopTimer(pomodoroWorker);
   pomodoroActive = false;
   hide(pomodoroStopButton);
   show(pomodoroStartButton);
@@ -154,7 +154,7 @@ function pomodoroStopButtonHandler() {
 }
 
 function pomodoroResetButtonHandler() {
-  stopTimer();
+  stopTimer(pomodoroWorker);
   pomodoroActive = false;
   setTimerEl(pomodoroTimerEl, POMODORO_SECONDS);
   hide(pomodoroResetButton);
@@ -165,7 +165,7 @@ function pomodoroResetButtonHandler() {
 
 function shortBreakStartButtonHandler() {
   pomodoroResetButtonHandler();
-  longBreakResetButtonHandler();
+  // longBreakResetButtonHandler();
 
   hide(shortBreakStartButton);
   show(shortBreakStopButton);
@@ -173,33 +173,35 @@ function shortBreakStartButtonHandler() {
   show(shortBreakResetButton);
 
   let totalSeconds = getTotalSeconds(shortBreakTimerEl);
+  startTimer(shortBreakWorker, totalSeconds);
 
-  shortBreakTimer = setInterval(function () {
-    shortBreakActive = true;
-    totalSeconds -= 1;
-    setTimerEl(shortBreakTimerEl, totalSeconds);
+  shortBreakActive = true;
 
-    if (totalSeconds === 0) {
-      stopTimer(shortBreakTimer);
-      shortBreakActive = false;
+  shortBreakWorker.onmessage = function (e) {
+    if (e.data === 'countDownComplete') {
+      pomodoroActive = false;
       setTimerEl(shortBreakTimerEl, SHORT_BREAK_SECONDS);
 
       hide(shortBreakContainer);
       hide(shortBreakStopButton);
       hide(shortBreakResetButton);
       show(shortBreakStartButton);
-      show(pomodoroContainer);
+      show(shortBreakContainer);
       displayCurrentMode(pomodoroModeEl);
       pomodoroStartButton.focus();
-
       notify();
+      return;
     }
-  }, 1000);
+
+    totalSeconds = e.data;
+    setTimerEl(shortBreakTimerEl, totalSeconds);
+  };
+
   playClickSound();
 }
 
 function shortBreakStopButtonHandler() {
-  stopTimer(shortBreakTimer);
+  stopTimer(shortBreakWorker);
   shortBreakActive = false;
   hide(shortBreakStopButton);
   show(shortBreakStartButton);
@@ -207,7 +209,7 @@ function shortBreakStopButtonHandler() {
 }
 
 function shortBreakResetButtonHandler() {
-  stopTimer(shortBreakTimer);
+  stopTimer(shortBreakWorker);
   shortBreakActive = false;
   setTimerEl(shortBreakTimerEl, SHORT_BREAK_SECONDS);
   hide(shortBreakResetButton);
@@ -297,8 +299,12 @@ function getTotalSeconds(timerEl) {
   return minutes * 60 + seconds;
 }
 
-function stopTimer() {
-  timerWorker.postMessage({ command: 'stopTimer' });
+function startTimer(worker, seconds) {
+  worker.postMessage({ command: 'startTimer', seconds });
+}
+
+function stopTimer(worker) {
+  worker.postMessage({ command: 'stopTimer' });
 }
 
 function notify() {
