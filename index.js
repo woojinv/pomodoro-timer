@@ -1,8 +1,9 @@
 // Imports
 const clickAudio = new Audio('./sounds/click.mp3');
 const notificationAudio = new Audio('./sounds/short-break-end.mp3');
-const pomodoroWorker = new Worker('pomodoroWorker.js');
-const shortBreakWorker = new Worker('pomodoroWorker.js');
+const pomodoroWorker = new Worker('timerWorker.js');
+const shortBreakWorker = new Worker('timerWorker.js');
+const longBreakWorker = new Worker('timerWorker.js');
 
 // Constants
 const POMODORO_SECONDS = 5;
@@ -101,7 +102,7 @@ function longBreakModeElHandler() {
 
 function pomodoroStartButtonHandler() {
   shortBreakResetButtonHandler();
-  // longBreakResetButtonHandler();
+  longBreakResetButtonHandler();
 
   hide(pomodoroStartButton);
   show(pomodoroStopButton);
@@ -165,7 +166,7 @@ function pomodoroResetButtonHandler() {
 
 function shortBreakStartButtonHandler() {
   pomodoroResetButtonHandler();
-  // longBreakResetButtonHandler();
+  longBreakResetButtonHandler();
 
   hide(shortBreakStartButton);
   show(shortBreakStopButton);
@@ -179,7 +180,7 @@ function shortBreakStartButtonHandler() {
 
   shortBreakWorker.onmessage = function (e) {
     if (e.data === 'countDownComplete') {
-      pomodoroActive = false;
+      shortBreakActive = false;
       setTimerEl(shortBreakTimerEl, SHORT_BREAK_SECONDS);
 
       hide(shortBreakContainer);
@@ -229,13 +230,12 @@ function longBreakStartButtonHandler() {
 
   let totalSeconds = getTotalSeconds(longBreakTimerEl);
 
-  longBreakTimer = setInterval(function () {
-    longBreakActive = true;
-    totalSeconds -= 1;
-    setTimerEl(longBreakTimerEl, totalSeconds);
+  startTimer(longBreakWorker, totalSeconds);
 
-    if (totalSeconds === 0) {
-      stopTimer(longBreakTimer);
+  longBreakActive = true;
+
+  longBreakWorker.onmessage = function (e) {
+    if (e.data === 'countDownComplete') {
       longBreakActive = false;
       setTimerEl(longBreakTimerEl, LONG_BREAK_SECONDS);
 
@@ -243,18 +243,22 @@ function longBreakStartButtonHandler() {
       hide(longBreakStopButton);
       hide(longBreakResetButton);
       show(longBreakStartButton);
-      show(pomodoroContainer);
+      show(longBreakContainer);
       displayCurrentMode(pomodoroModeEl);
       pomodoroStartButton.focus();
-
       notify();
+      return;
     }
-  }, 1000);
+
+    totalSeconds = e.data;
+    setTimerEl(longBreakTimerEl, totalSeconds);
+  };
+
   playClickSound();
 }
 
 function longBreakStopButtonHandler() {
-  stopTimer(longBreakTimer);
+  stopTimer(longBreakWorker);
   longBreakActive = false;
   hide(longBreakStopButton);
   show(longBreakStartButton);
@@ -262,7 +266,7 @@ function longBreakStopButtonHandler() {
 }
 
 function longBreakResetButtonHandler() {
-  stopTimer(longBreakTimer);
+  stopTimer(longBreakWorker);
   longBreakActive = false;
   setTimerEl(longBreakTimerEl, LONG_BREAK_SECONDS);
   hide(longBreakResetButton);
