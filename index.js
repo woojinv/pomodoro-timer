@@ -1,9 +1,10 @@
 // Imports
 const clickAudio = new Audio('./sounds/click.mp3');
 const notificationAudio = new Audio('./sounds/short-break-end.mp3');
+const timerWorker = new Worker('timerWorker.js');
 
 // Constants
-const POMODORO_SECONDS = 25 * 60;
+const POMODORO_SECONDS = 5;
 const SHORT_BREAK_SECONDS = 5 * 60;
 const LONG_BREAK_SECONDS = 15 * 60;
 
@@ -52,7 +53,6 @@ longBreakStopButton.addEventListener('click', longBreakStopButtonHandler);
 longBreakResetButton.addEventListener('click', longBreakResetButtonHandler);
 
 // Global variables
-let pomodoroTimer;
 let shortBreakTimer;
 let longBreakTimer;
 
@@ -109,13 +109,12 @@ function pomodoroStartButtonHandler() {
 
   let totalSeconds = getTotalSeconds(pomodoroTimerEl);
 
-  pomodoroTimer = setInterval(function () {
-    pomodoroActive = true;
-    totalSeconds -= 1;
-    setTimerEl(pomodoroTimerEl, totalSeconds);
+  timerWorker.postMessage({ command: 'startTimer', totalSeconds });
 
-    if (totalSeconds === 0) {
-      stopTimer(pomodoroTimer);
+  pomodoroActive = true;
+
+  timerWorker.onmessage = function (e) {
+    if (e.data === 'countDownComplete') {
       pomodoroActive = false;
       setTimerEl(pomodoroTimerEl, POMODORO_SECONDS);
 
@@ -124,7 +123,7 @@ function pomodoroStartButtonHandler() {
       hide(pomodoroResetButton);
       show(pomodoroStartButton);
 
-      numPomodoros += 1;
+      numPomodoros++;
 
       if (numPomodoros !== 4) {
         show(shortBreakContainer);
@@ -138,13 +137,16 @@ function pomodoroStartButtonHandler() {
       }
 
       notify();
+      return;
     }
-  }, 1000);
+    totalSeconds = e.data;
+    setTimerEl(pomodoroTimerEl, totalSeconds);
+  };
   playClickSound();
 }
 
 function pomodoroStopButtonHandler() {
-  stopTimer(pomodoroTimer);
+  stopTimer();
   pomodoroActive = false;
   hide(pomodoroStopButton);
   show(pomodoroStartButton);
@@ -152,7 +154,7 @@ function pomodoroStopButtonHandler() {
 }
 
 function pomodoroResetButtonHandler() {
-  stopTimer(pomodoroTimer);
+  stopTimer();
   pomodoroActive = false;
   setTimerEl(pomodoroTimerEl, POMODORO_SECONDS);
   hide(pomodoroResetButton);
@@ -295,8 +297,8 @@ function getTotalSeconds(timerEl) {
   return minutes * 60 + seconds;
 }
 
-function stopTimer(timer) {
-  clearInterval(timer);
+function stopTimer() {
+  timerWorker.postMessage({ command: 'stopTimer' });
 }
 
 function notify() {
