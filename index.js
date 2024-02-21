@@ -6,7 +6,7 @@ const shortBreakWorker = new Worker('timerWorker.js');
 const longBreakWorker = new Worker('timerWorker.js');
 
 // Constants
-const POMODORO_SECONDS = 5;
+const POMODORO_SECONDS = 25 * 60;
 const SHORT_BREAK_SECONDS = 5 * 60;
 const LONG_BREAK_SECONDS = 15 * 60;
 
@@ -55,9 +55,6 @@ longBreakStopButton.addEventListener('click', longBreakStopButtonHandler);
 longBreakResetButton.addEventListener('click', longBreakResetButtonHandler);
 
 // Global variables
-let shortBreakTimer;
-let longBreakTimer;
-
 let numPomodoros = 0;
 
 let pomodoroActive = false;
