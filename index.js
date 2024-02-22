@@ -6,9 +6,9 @@ const shortBreakWorker = new Worker('timerWorker.js');
 const longBreakWorker = new Worker('timerWorker.js');
 
 // Constants
-const POMODORO_SECONDS = 5;
-const SHORT_BREAK_SECONDS = 6;
-const LONG_BREAK_SECONDS = 7;
+const POMODORO_SECONDS = 25 * 60;
+const SHORT_BREAK_SECONDS = 5 * 60;
+const LONG_BREAK_SECONDS = 15 * 60;
 
 // DOM elements
 const pomodoroModeEl = document.getElementById('pomodoroMode');
