@@ -1,8 +1,6 @@
 let countDown;
 
 function startTimer(duration) {
-  console.log(' timer startted');
-
   countDown = setInterval(function () {
     duration--;
     postMessage(duration);
