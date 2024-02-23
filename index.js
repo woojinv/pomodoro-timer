@@ -1,6 +1,8 @@
 // Imports
 const clickAudio = new Audio('./sounds/click.mp3');
 const notificationAudio = new Audio('./sounds/short-break-end.mp3');
+
+// Workers
 const pomodoroWorker = new Worker('timerWorker.js');
 const shortBreakWorker = new Worker('timerWorker.js');
 const longBreakWorker = new Worker('timerWorker.js');
@@ -98,6 +100,7 @@ function longBreakModeElHandler() {
 }
 
 function pomodoroStartButtonHandler() {
+  // If the start button is clicked, the other timers should reset.
   shortBreakResetButtonHandler();
   longBreakResetButtonHandler();
 
@@ -162,6 +165,7 @@ function pomodoroResetButtonHandler() {
 }
 
 function shortBreakStartButtonHandler() {
+  // If the start button is clicked, the other timers should reset.
   pomodoroResetButtonHandler();
   longBreakResetButtonHandler();
 
@@ -217,6 +221,7 @@ function shortBreakResetButtonHandler() {
 }
 
 function longBreakStartButtonHandler() {
+  // If the start button is clicked, the other timers should reset.
   pomodoroResetButtonHandler();
   shortBreakResetButtonHandler();
 
@@ -293,6 +298,7 @@ function setTimerEl(timerEl, seconds) {
   timerEl.innerHTML = `${formattedMinutes}:${formattedSeconds}`;
 }
 
+// Extract displayed time from HTML and convert to total seconds.
 function getTotalSeconds(timerEl) {
   const timeValues = timerEl.innerHTML.split(':');
   const minutes = Number(timeValues[0]);
@@ -300,6 +306,7 @@ function getTotalSeconds(timerEl) {
   return minutes * 60 + seconds;
 }
 
+// Send message to specified worker, indicating to start timer at specified number of seconds.
 function startTimer(worker, seconds) {
   worker.postMessage({ command: 'startTimer', seconds });
 }
