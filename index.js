@@ -37,6 +37,12 @@ const pomodoroResetButton = document.getElementById('pomodoroResetButton');
 const shortBreakResetButton = document.getElementById('shortBreakResetButton');
 const longBreakResetButton = document.getElementById('longBreakResetButton');
 
+const darkModeToggleButton = document.getElementById('darkModeToggle');
+
+darkModeToggleButton.addEventListener('change', function () {
+  document.getElementById('body').classList.toggle('dark-mode');
+});
+
 // Register event listeners
 document.addEventListener('DOMContentLoaded', domContentLoadedHandler);
 

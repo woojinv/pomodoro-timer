@@ -99,3 +99,8 @@
     }
   }
 }
+
+*.dark-mode {
+  background-color: #374151;
+  color: #f9fafb;
+}
