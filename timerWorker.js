@@ -28,6 +28,6 @@ onmessage = function (e) {
   if (e.data.command === 'startTimer') {
     startTimer(e.data.seconds);
   } else if (e.data.command === 'stopTimer') {
-    clearInterval(countDown);
+    clearInterval(timer);
   }
 };
