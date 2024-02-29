@@ -126,7 +126,7 @@ function pomodoroStartButtonHandler() {
 
       numPomodoros++;
 
-      if (numPomodoros !== 4) {
+      if (numPomodoros % 4 !== 0) {
         show(shortBreakContainer);
         displayCurrentMode(shortBreakModeEl);
         shortBreakStartButton.focus();
